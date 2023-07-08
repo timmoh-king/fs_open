@@ -4,6 +4,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static('build'))
 
 let notes = [
   {
@@ -81,7 +82,7 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-const PORT = process.env || 3005
+const PORT = 3005 || process.env
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

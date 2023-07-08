@@ -81,7 +81,7 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-const PORT = 3005 || process.env
+const PORT = process.env || 3005
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

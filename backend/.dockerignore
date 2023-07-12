@@ -1,1 +1,1 @@
-.env = fly secrets set MONGODB_URI='mongodb+srv://fsopen:fsopen@atlascluster.sautxcm.mongodb.net/?retryWrites=true&w=majority'
+.env

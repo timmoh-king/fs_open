@@ -1,74 +1,59 @@
-const Note = require('./models/note')
-const express = require('express')
-const cors = require('cors')
-const app = express()
-require('dotenv').config()
+const Note = require("./models/note");
+const express = require("express");
+const cors = require("cors");
+const note = require("./models/note");
+const app = express();
+require("dotenv").config();
 
-app.use(express.json())
-app.use(cors())
-app.use(express.static('build'))
+app.use(express.json());
+app.use(cors());
+app.use(express.static("build"));
 
-app.get('/api/notes', (request, response) => {
-  Note.find({}).then(notes => {
-    response.json(notes)
-  })
-})
+app.get("/api/notes", (request, response) => {
+  Note.find({}).then((notes) => {
+    response.json(notes);
+  });
+});
 
-// const generateId = () => {
-//   const maxId = notes.length > 0
-//     ? Math.max(...notes.map(n => n.id))
-//     : 0
-//   return maxId + 1
-// }
+app.get("/api/notes/:id", (request, response) => {
+  Note.findById(request.params.id).then((note) => {
+    response.json(note);
+  });
+});
 
-// app.post('/api/notes', (request, response) => {
-//   const body = request.body
+app.post("/api/notes", (request, response) => {
+  const body = request.body;
 
-//   if (!body.content) {
-//     return response.status(400).json({ 
-//       error: 'content missing' 
-//     })
-//   }
+  if (body.content === undefined) {
+    return response.status(400).json({ error: "content missing" });
+  }
 
-//   const note = {
-//     content: body.content,
-//     important: body.important || false,
-//     date: new Date(),
-//     id: generateId(),
-//   }
+  const note = new Note({
+    content: body.content,
+    important: body.important || false,
+  });
 
-//   notes = notes.concat(note)
+  note.save().then((savedNote) => {
+    response.json(savedNote);
+  });
+});
 
-//   response.json(note)
-// })
+app.put("/api/notes/:id", (request, response) => {
+  if (request.params.id === null) {
+    return response.status(400).json({ error: "Id missing" });
+  }
+  const id = request.params.id
+  const body = request.body;
+  Note.findByIdAndUpdate(id, {body})
+});
 
-// app.get('/api/notes/:id', (request, response) => {
-//   const id = Number(request.params.id)
-//   const note = notes.find(note => note.id === id)
+app.delete("/api/notes/:id", (request, response) => {
+  Note.findByIdAndDelete(request.params.id).then((note) => {
+    response.json(note);
+  });
+});
 
-//   if (note) {
-//     response.json(note)
-//   } else {
-//     response.status(404).end()
-//   }
-
-// })
-
-// app.put('/api/notes/:id', (request, response) => {
-//   const id = Number(request.params.id)
-//   const note = notes.find(note => note.id === id)
-//   const changedNote = request.body
-//   response.json(changedNote)
-// })
-
-// app.delete('/api/notes/:id', (request, response) => {
-//   const id = Number(request.params.id)
-//   notes = notes.filter(note => note.id !== id)
-
-//   response.status(204).end()
-// })
-
-const PORT =  process.env.PORT
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+  console.log(`Server running on port ${PORT}`);
+});

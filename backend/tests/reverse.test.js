@@ -19,7 +19,7 @@ test("reverse of releveler", () => {
 });
 
 test("palindrome of react", () => {
-  const result = reverse("react");
+  const result = reverse("racecar");
 
-  expect(result).toBe("tkaer");
+  expect(result).toBe("racecar");
 });

@@ -29,3 +29,5 @@ note.save().then(result => {
   console.log('note saved!')
   mongoose.connection.close()
 })
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRhbmllbCBMaW9ucyIsImlkIjoiNjRiNTRkMWFjN2JkYmQwMzcyN2RlYTc5IiwiaWF0IjoxNjg5NjA2MDQxfQ.JfTjD8mKyTsEGRPdeSaEwl2QcvFWJpGfgYJIg9m5-kw
